@@ -1,26 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <!--TODO button and textfield functionality-->
 
 <VBox fx:id="window" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-      <children>
-        <Label fx:id="label" alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Hello World!" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false" AnchorPane.leftAnchor="155.0" AnchorPane.rightAnchor="155.0">
-          <font>
-            <Font size="18.0" />
-          </font>
-        </Label>
-            <TextField fx:id="testJsonField" layoutX="246.0" layoutY="204.0" promptText="Press button after writing" />
-            <Button fx:id="testJsonButton" layoutX="344.0" layoutY="230.0" mnemonicParsing="false" text="Button" />
-      </children>
+         <children>
+            <ListView fx:id="fileListView" layoutX="14.0" layoutY="70.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="10.0" />
+         </children>
     </AnchorPane>
   </children>
 </VBox>
