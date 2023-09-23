@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -10,7 +12,10 @@
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
-            <ListView fx:id="fileListView" layoutX="14.0" layoutY="70.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="10.0" />
+            <ListView fx:id="fileListView" layoutX="14.0" layoutY="70.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="60.0" />
+            <Button id="button1" fx:id="button1" layoutX="558.0" layoutY="360.0" mnemonicParsing="false" onAction="#viewFiles" text="Press me!" />
+            <Label fx:id="pathBar" layoutX="10.0" layoutY="29.0" prefHeight="37.0" prefWidth="630.0" AnchorPane.bottomAnchor="353.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+            <Button layoutX="256.0" layoutY="60.0" mnemonicParsing="false" text="Go to Home Directory" />
          </children>
     </AnchorPane>
   </children>
