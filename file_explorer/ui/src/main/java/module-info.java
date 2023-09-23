@@ -2,8 +2,8 @@ module file_explorer.ui {
 
     requires javafx.fxml;
     requires javafx.controls;
-    requires file_explorer.core;
     requires javafx.graphics;
+    requires file_explorer.core;
 
-    exports file_explorer.ui to javafx.graphics, javafx.fxml;
+    opens file_explorer.ui to javafx.graphics, javafx.fxml;
 }
