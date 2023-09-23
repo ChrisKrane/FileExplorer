@@ -34,10 +34,12 @@ public class DirectoryFileFinder {
                 return name.endsWith(filter);
             }
         };
+
         File[] fileOfTypeInDirectory = directory.listFiles(fileFilter);
         
         if(fileOfTypeInDirectory.length != 0) {
             List<File> listOfFiles = new ArrayList<>();
+
             for(File file : fileOfTypeInDirectory) {
                 listOfFiles.add(file);
             }
