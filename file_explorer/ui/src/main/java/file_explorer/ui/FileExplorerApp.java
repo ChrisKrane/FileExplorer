@@ -10,14 +10,14 @@ import javafx.stage.Stage;
 
 public class FileExplorerApp extends Application {
 
-@Override
-public void start(Stage stage) throws IOException {
-    Parent parent = FXMLLoader.load(getClass().getResource("FileExplorerApp.fxml"));
-    stage.setScene(new Scene(parent));
-    stage.show();
-}
+    @Override
+    public void start(Stage stage) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("FileExplorerApp.fxml"));
+        stage.setScene(new Scene(parent));
+        stage.show();
+    }
 
-public static void main(String[] args) {
-    launch();
+    public static void main(String[] args) {
+        launch();
     }
 }
