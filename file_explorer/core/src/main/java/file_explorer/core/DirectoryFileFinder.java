@@ -8,11 +8,20 @@ import java.util.List;
 public class DirectoryFileFinder {
 
     public static void main(String[] args) {
-        DesktopLocator dl = new DesktopLocator();
+        
+        StartingDirectoryFinder dl = new StartingDirectoryFinder();
+        /*
         DirectoryFileFinder dff = new DirectoryFileFinder();
-        List<File> listOfFiles = dff.findFileTypeInDirectory(dl.findDesktopLocation(), ".pdf");
-        System.out.println(listOfFiles);
-    }
+        List<File> listOfFiles = dff.findFilesInDirectory(dl.findDesktopLocation());
+        for(File file : listOfFiles) {
+            System.out.println(file.getName());
+        }
+        */
+        File[] roots = File.listRoots();
+        for(File file : roots) 
+            System.out.println(file.getPath());
+            System.out.println(dl.findDesktopLocation().getParent());
+        }   
 
     public List<File> findFilesInDirectory(File directory) {
         File[] filesInDirectory = directory.listFiles();

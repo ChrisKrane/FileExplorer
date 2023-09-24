@@ -1,23 +1,41 @@
 package file_explorer.ui;
 
-import file_explorer.core.DesktopLocator;
+import file_explorer.core.StartingDirectoryFinder;
+
+import java.io.File;
+import java.util.List;
+
 import file_explorer.core.DirectoryFileFinder;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ComboBox;
 
 public class FileExplorerController {
 
     @FXML private ListView<Label> fileListView;
-    @FXML private Button button1;
+    @FXML private ComboBox<Label> driveDropdownMenu;
 
-    public void viewFiles() {
-        ListViewObjectCreator populator = new ListViewObjectCreator(fileListView);
-        DirectoryFileFinder finder = new DirectoryFileFinder();
-        DesktopLocator locator = new DesktopLocator();
+    ListViewObjectCreator listViewPopulator;
+    DirectoryFileFinder directoryFileFinder;
+    StartingDirectoryFinder startingDirectoryFinder;
+    ComboboxObjectCreator comboBoxPopulator;
 
-        populator.populateScrollPane(finder.findFilesInDirectory(locator.findDesktopLocation()));
+    public void initialize() {
+        comboBoxPopulator = new ComboboxObjectCreator(driveDropdownMenu);
+        listViewPopulator = new ListViewObjectCreator(fileListView);
+        directoryFileFinder = new DirectoryFileFinder();
+        startingDirectoryFinder = new StartingDirectoryFinder();
+        viewFiles(directoryFileFinder.findFilesInDirectory(startingDirectoryFinder.findDriveLocations()[0]));
+        comboBoxPopulator.populateComboBox(startingDirectoryFinder.findDriveLocations());
+    }
+
+    public void viewFiles(List<File> files) {
+        listViewPopulator.populateListView(files);
+    }
+
+    public void selectDrive() {
 
     }
 }

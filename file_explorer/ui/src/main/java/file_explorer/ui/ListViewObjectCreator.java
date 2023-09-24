@@ -15,17 +15,13 @@ public class ListViewObjectCreator {
     }
 
     public Label fileToLabel(File file) {
-
         Label label = new Label(file.getName());
         return label;
     }
 
-    public void populateScrollPane(List<File> files) {
-        
+    public void populateListView(List<File> files) {
         for (File file : files) {
             listView.getItems().add(fileToLabel(file));
         }
-        
-        
     }
 }
