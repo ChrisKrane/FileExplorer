@@ -23,6 +23,7 @@ public class DirectoryFileFinder {
             System.out.println(dl.findDesktopLocation().getParent());
         }   
 
+    //Finner alle filer og mapper i en gitt mappe
     public List<File> findFilesInDirectory(File directory) {
         File[] filesInDirectory = directory.listFiles();
         
@@ -36,6 +37,7 @@ public class DirectoryFileFinder {
         throw new IllegalStateException("This directory is empty.");
     }
 
+    //Finner alle filer av en gitt type i en gitt mappe
     public List<File> findFileTypeInDirectory(File directory, String filter) {
 
         FilenameFilter fileFilter = new FilenameFilter() {

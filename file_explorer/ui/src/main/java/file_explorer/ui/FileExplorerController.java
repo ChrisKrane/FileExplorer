@@ -22,6 +22,7 @@ public class FileExplorerController {
     StartingDirectoryFinder startingDirectoryFinder;
     ComboboxObjectCreator comboBoxPopulator;
 
+    //Initialiserer default-verdiene i ui
     public void initialize() {
         comboBoxPopulator = new ComboboxObjectCreator(driveDropdownMenu);
         listViewPopulator = new ListViewObjectCreator(fileListView);
@@ -31,11 +32,15 @@ public class FileExplorerController {
         comboBoxPopulator.populateComboBox(startingDirectoryFinder.findDriveLocations());
     }
 
+    //Kaller på ListViewObjectCreator for å populere ListView med filer
     public void viewFiles(List<File> files) {
         listViewPopulator.populateListView(files);
     }
 
-    public void selectDrive() {
-
+    //Kaller på DirectoryFileFinder for å finne filer på en valgt stasjon
+    public void selectDrive(Label selectedDrive) {
+        File drive = new File(selectedDrive.getText());
+        viewFiles(directoryFileFinder.findFilesInDirectory(drive));
     }
+        
 }

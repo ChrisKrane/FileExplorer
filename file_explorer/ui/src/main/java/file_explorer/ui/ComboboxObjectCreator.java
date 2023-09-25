@@ -10,10 +10,12 @@ public class ComboboxObjectCreator {
     
     @FXML private ComboBox<Label> comboBox;
 
+    //Konstruktør
     public ComboboxObjectCreator(ComboBox<Label> comboBox) {
         this.comboBox = comboBox;
     }
 
+    //Populerer comboboxen med stasjoner
     public void populateComboBox(File[] drives) {
         for(File drive : drives) {
             comboBox.getItems().add(new Label(drive.getAbsolutePath()));
