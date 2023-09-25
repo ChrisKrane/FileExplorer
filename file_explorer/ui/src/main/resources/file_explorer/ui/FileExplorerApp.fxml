@@ -13,10 +13,18 @@
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
-            <ListView fx:id="fileListView" layoutX="14.0" layoutY="70.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="60.0" />
-            <Label fx:id="pathBar" layoutX="10.0" layoutY="29.0" prefHeight="37.0" prefWidth="630.0" AnchorPane.bottomAnchor="353.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
-            <Button layoutX="256.0" layoutY="60.0" mnemonicParsing="false" text="Go to Home Directory" />
-            <ComboBox fx:id="driveDropdownMenu" layoutX="474.0" layoutY="60.0" prefWidth="150.0" promptText="Select Drive" />
+            <Label fx:id="pathBar" layoutX="10.0" layoutY="29.0" prefHeight="37.0" prefWidth="630.0" AnchorPane.bottomAnchor="350.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+            <AnchorPane fx:id="controlAndDisplay" layoutX="10.0" layoutY="60.0" prefHeight="331.0" prefWidth="620.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0">
+               <children>
+                  <AnchorPane fx:id="controls" prefHeight="319.0" prefWidth="370.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <ComboBox fx:id="driveDropdownMenu" onAction="#selectDrive" prefWidth="150.0" promptText="Select Drive" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Button fx:id="desktopButton" mnemonicParsing="false" text="Go to desktop" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+                  <ListView fx:id="fileListView" prefHeight="330.0" prefWidth="230.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
          </children>
     </AnchorPane>
   </children>

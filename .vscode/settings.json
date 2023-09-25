@@ -1,10 +1,28 @@
 {
     "java.configuration.updateBuildConfiguration": "disabled",
     "cSpell.words": [
+        "Bruker",
+        "brukerens",
         "Combobox",
+        "enkel",
+        "finne",
+        "Finner",
+        "getdefaultdirectory",
+        "gitt",
+        "Initialiserer",
+        "Kaller",
         "Konstruktør",
         "Konverterer",
+        "mappe",
+        "maskinen",
+        "metode",
         "Populator",
-        "Populerer"
+        "populere",
+        "Populerer",
+        "skrivebord",
+        "stasjon",
+        "stasjoner",
+        "valgt",
+        "verdiene"
     ]
 }

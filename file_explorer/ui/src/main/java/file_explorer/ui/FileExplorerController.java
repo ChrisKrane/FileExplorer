@@ -38,8 +38,9 @@ public class FileExplorerController {
     }
 
     //Kaller på DirectoryFileFinder for å finne filer på en valgt stasjon
-    public void selectDrive(Label selectedDrive) {
-        File drive = new File(selectedDrive.getText());
+    //TODO needs proper testing
+    public void selectDrive() {
+        File drive = new File(driveDropdownMenu.getValue().getText());
         viewFiles(directoryFileFinder.findFilesInDirectory(drive));
     }
         
