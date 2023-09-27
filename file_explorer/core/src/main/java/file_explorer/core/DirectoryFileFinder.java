@@ -30,7 +30,9 @@ public class DirectoryFileFinder {
         if(filesInDirectory.length != 0) {
             List<File> listOfFiles = new ArrayList<>();
             for(File file : filesInDirectory) {
-                listOfFiles.add(file);
+                if(!file.isHidden()) {
+                    listOfFiles.add(file);
+                }
             }
             return listOfFiles;
         }

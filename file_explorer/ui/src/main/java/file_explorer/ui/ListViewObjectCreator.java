@@ -23,8 +23,16 @@ public class ListViewObjectCreator {
 
     //Populerer ListView med filer
     public void populateListView(List<File> files) {
-        for (File file : files) {
-            listView.getItems().add(fileToLabel(file));
+        if(listView.getItems().size() != 0) {
+            listView.getItems().clear();
+            for (File file : files) {
+                listView.getItems().add(fileToLabel(file));
+            }
+        }
+        else {
+            for (File file : files) {
+                listView.getItems().add(fileToLabel(file));
+            }
         }
     }
 }
