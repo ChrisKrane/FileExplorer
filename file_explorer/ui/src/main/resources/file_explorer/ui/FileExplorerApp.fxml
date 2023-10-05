@@ -4,7 +4,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -25,8 +25,13 @@
                         <Button fx:id="desktopButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="130.0" text="Go to Desktop" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0" />
                         <TextField fx:id="costumPathField" layoutX="135.0" layoutY="1.0" onAction="#onEnter" prefHeight="25.0" prefWidth="130.0" promptText="Costum path" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="0.0" />
                         <Button fx:id="goToParentButton" layoutY="26.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="130.0" text="Go to parent" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="25.0" />
-                        <TextArea fx:id="fileInformationArea" editable="false" layoutY="131.0" prefHeight="300.0" prefWidth="390.0" promptText="File information will be displayed here" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
                         <Button fx:id="goToSelectedButton" layoutX="140.0" layoutY="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="260.0" text="Go to selected directory" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0" />
+                        <AnchorPane layoutX="160.0" layoutY="140.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="140.0">
+                           <children>
+                              <ProgressIndicator fx:id="loadingIcon" visible="false" AnchorPane.bottomAnchor="64.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="64.0" />
+                              <ListView fx:id="fileInformationList" layoutX="-3.0" layoutY="-5.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-radius: 10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
                      </children>
                   </AnchorPane>
                </children>

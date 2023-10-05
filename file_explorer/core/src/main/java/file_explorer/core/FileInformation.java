@@ -1,7 +1,8 @@
 package file_explorer.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.List;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,12 +18,15 @@ public class FileInformation {
     private boolean isDirectory;
     private String fileName;
     private String fileType;
+    private int numberOfFiles;
     private String fileSize;
     private String fileLocation;
     private Icon fileIcon;
 
     //hashmap probably not needed, only one file is being stored per instance of FileInformation
     private HashMap<String, String> fileSizeCache = new HashMap<String, String>();
+    private HashMap<String, Integer> fileNumberCache = new HashMap<String, Integer>();
+    private List<FileSizeListener> listeners = new ArrayList<>();
 
     private Path path;
     private BasicFileAttributes attributes; 
@@ -35,30 +39,87 @@ public class FileInformation {
         this.isDirectory = file.isDirectory();
         this.path = file.toPath();
         this.attributes = Files.readAttributes(path, BasicFileAttributes.class);
-        setFileInformation();
     }
 
-    //Sets the file information 
-    public void setFileInformation() {
+    public void addListener(FileSizeListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeListener(FileSizeListener listener) {
+        listeners.remove(listener);
+    }
+
+    public void setFileName() {
         fileName = file.getName();
+    }
+
+    public void setFileType() {
         fileType = fileSystemView.getSystemTypeDescription(file);
-        fileSize = getFileSize(file);
-        fileLocation = file.getAbsolutePath();
+    }
+
+    public void setFileLocation() {
+        fileLocation = file.getPath();
+    }
+
+    public void setNumberOfFiles() {
+        numberOfFiles = findNumberOfFiles(file);
+    }
+
+    public void setFileSize() {
+        fileSize = findFileSize(file);
+    }
+
+    //
+    public int findNumberOfFiles(File file) {
+        if(fileNumberCache.containsKey(file.getPath())) {
+            return fileNumberCache.get(file.getPath());
+        }
+        for(FileSizeListener listener : listeners) {
+            listener.startLoading();
+        }
+
+        int numberOfFiles = 0;
+        if(file.listFiles() != null) {
+            for(File f : file.listFiles()) {
+                if(f.isFile()) {
+                    numberOfFiles++;
+                }
+                else if(f.isDirectory()){
+                    numberOfFiles += findNumberOfFiles(f);
+                }
+            }
+            if(numberOfFiles % 100 == 0) {
+                for(FileSizeListener listener : listeners) {
+                    listener.updateNumberOfFiles(numberOfFiles);
+                }
+            }
+        }   
+        else {
+            numberOfFiles++;
+        }
+        for(FileSizeListener listener : listeners) {
+            listener.stopLoading();
+        }
+        return numberOfFiles;
     }
 
     //Gets the file size
-    public String getFileSize(File file) {
+    public String findFileSize(File file) {
+
         long bytes = file.length();
+        updateLoading(true);
         if(fileSizeCache.containsKey(file.getPath())) {
             return getSavedFileSize(file.getPath());
         }
-        else if(isDirectory && file.listFiles().length > 0) {
+        else if(isDirectory && file.listFiles() != null) {
             bytes = getDirectorySize(file);
         }
 
         if(bytes > 0) {
+            updateLoading(false);
             if(bytes < 1024) {
                 saveFileSize(file.getPath(), bytes + " bytes");
+                
                 return bytes + " bytes";
             }
             else if(bytes < 1048576) {
@@ -89,6 +150,12 @@ public class FileInformation {
                 else {
                     size += getDirectorySize(file);
                 }
+                
+                if(size % 100 == 0) {
+                    for(FileSizeListener listener : listeners) {
+                        listener.updateFileSize(size);
+                    }
+                }
             }
         }
         else {
@@ -108,6 +175,19 @@ public class FileInformation {
         throw new IllegalStateException("Cache error");
     }
 
+    public void updateLoading(boolean isLoading) {
+        if(isLoading) {
+            for(FileSizeListener listener : listeners) {
+                listener.startLoading();
+            }
+        }
+        else {
+            for(FileSizeListener listener : listeners) {
+                listener.stopLoading();
+            }
+        }
+    }
+
     //Getters for file information
     public boolean isDirectory() {
         return isDirectory;
@@ -121,6 +201,10 @@ public class FileInformation {
         return fileType;
     }
 
+    public int getNumberOfFiles() {
+        return numberOfFiles;
+    }
+
     public String getFileSize() {
         return fileSize;
     }
@@ -132,4 +216,6 @@ public class FileInformation {
     public Icon getFileIcon() {
         return fileIcon;
     }
+
+    
 }
