@@ -69,7 +69,7 @@ public class FileInformation {
         fileSize = findFileSize(file);
     }
 
-    //
+    //Finds the number of files in a directory
     public int findNumberOfFiles(File file) {
         if(fileNumberCache.containsKey(file.getPath())) {
             return fileNumberCache.get(file.getPath());
@@ -103,7 +103,7 @@ public class FileInformation {
         return numberOfFiles;
     }
 
-    //Gets the file size
+    //Finds the file size
     public String findFileSize(File file) {
 
         long bytes = file.length();
@@ -138,7 +138,7 @@ public class FileInformation {
         return "is empty";
     }
 
-    //Gets the size of a directory
+    //Finds the size of a directory
     public Long getDirectorySize(File directory) {
         Long size = 0L;
         File[] files = directory.listFiles();
@@ -164,10 +164,12 @@ public class FileInformation {
         return size;
     }
 
+    //Saves the file size to a hashmap
     public void saveFileSize(String path, String size) {
         fileSizeCache.put(path, size);
     }
 
+    //Gets the file size from the hashmap
     public String getSavedFileSize(String path) {
         if(!fileSizeCache.isEmpty()) {
             return fileSizeCache.get(path);
@@ -175,6 +177,7 @@ public class FileInformation {
         throw new IllegalStateException("Cache error");
     }
 
+    //Updates the loading icon
     public void updateLoading(boolean isLoading) {
         if(isLoading) {
             for(FileSizeListener listener : listeners) {
@@ -189,10 +192,6 @@ public class FileInformation {
     }
 
     //Getters for file information
-    public boolean isDirectory() {
-        return isDirectory;
-    }
-
     public String getFileName() {
         return fileName;
     }
