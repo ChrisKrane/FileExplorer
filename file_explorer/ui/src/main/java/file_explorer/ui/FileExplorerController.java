@@ -24,12 +24,14 @@ import javafx.scene.control.ComboBox;
 public class FileExplorerController {
 
     private String currentPath;
+    private File selectedFile;
 
     @FXML private ListView<Label> fileListView;
     @FXML private ComboBox<Label> driveDropdownMenu;
     @FXML private TextField costumPathField;
     @FXML private ListView<Label> fileInformationList;
     @FXML private ProgressIndicator loadingIcon;
+    @FXML private Label pathBar;
     @FXML private Button desktopButton;
     @FXML private Button goToParentButton;
     @FXML private Button goToSelectedButton;
@@ -52,24 +54,43 @@ public class FileExplorerController {
         viewFiles(directoryFileFinder.findFilesInDirectory(startingDirectoryFinder.findDriveLocations()[0]));
         comboBoxPopulator.populateComboBox(startingDirectoryFinder.findDriveLocations());
         currentPath = startingDirectoryFinder.findDriveLocations()[0].getPath();
+        updatePathBar();
     }
 
-    //Calls on listViewPopulator to populate the listview with files
+    //Calls on listViewPopulator to populate the ListView with files
     public void viewFiles(List<File> files) {
         listViewPopulator.populateListView(files);
     }
 
-    //Calls on DirectoryFileFinder to find files in given directory
+    public void displayFileInformationInView(DisplayFileInformation displayFileInformation) {
+        displayFileInformation.displayFileName();
+        displayFileInformation.displayFileLocation();
+        displayFileInformation.displayFileType();
+        //TODO to be implemented later
+        //displayFileInformation.displayNumberOfFiles();
+        //displayFileInformation.displayFileSize();
+    }
+
+    /**
+     * Finds files in given directory when the button is clicked.
+     */
     //TODO needs proper testing
     public void selectDrive() {
         File drive = new File(driveDropdownMenu.getValue().getText());
         viewFiles(directoryFileFinder.findFilesInDirectory(drive));
+        updatePathBar();
     }
 
     //Calls DisplayFileInformation to display information about the file using FileInformation
+    /**
+     * Displays information about the file that is clicked by calling on FileInformation and DisplayFileInformation.
+     * 
+     * @throws IOException
+     */
     public void onFileClicked() throws IOException {
         String clickedObject = fileListView.getSelectionModel().getSelectedItem().getText();
         File clickedFile = new File(currentPath + "\\" + clickedObject);
+        selectedFile = clickedFile;
 
         if(clickedFileInformation.containsKey(currentPath + "\\" + clickedObject)) {
             fileInformation = clickedFileInformation.get(currentPath + "\\" + clickedObject);
@@ -81,18 +102,19 @@ public class FileExplorerController {
 
         DisplayFileInformation displayFileInformation = 
             new DisplayFileInformation(fileInformation, fileInformationList, loadingIcon);
+        displayFileInformationInView(displayFileInformation);
 
-        displayFileInformation.displayFileName();
-        displayFileInformation.displayFileLocation();
-        displayFileInformation.displayFileType();
-        //TODO to be implemanted later
-        //displayFileInformation.displayNumberOfFiles();
-        //displayFileInformation.displayFileSize();
+        updatePathBar();
     }
 
-    //Calls on DirectoryFileFinder to find files in given directory when enter is pressed
+    /**
+     * Finds files in given directory when enter is pressed.
+     * 
+     * @param ActionEvent enter
+     * @throws IOException
+     */
     @FXML
-    public void onEnter(ActionEvent pressedEnter) {
+    public void onEnter(ActionEvent pressedEnter) throws IOException {
         if(costumPathField.getText().length() > 0) {
             String path = costumPathField.getText();
             File file = new File(path);
@@ -100,11 +122,22 @@ public class FileExplorerController {
             if(file.exists() && file.isDirectory()) {
                 List<File> directoryFiles = directoryFileFinder.findFilesInDirectory(file);
                 currentPath = path;
+                updatePathBar();
                 viewFiles(directoryFiles);
             }
             else if(file.exists() && !file.isDirectory()) {
-                //TODO
-                //vis filinformasjon
+                List<File> directoryFiles = directoryFileFinder.findFilesInDirectory(file.getParentFile());
+                currentPath = file.getParentFile().getPath();
+                updatePathBar();
+                viewFiles(directoryFiles);
+
+                fileInformation = new FileInformation(file);
+                DisplayFileInformation displayFileInformation = 
+                    new DisplayFileInformation(fileInformation, fileInformationList, loadingIcon);
+                displayFileInformationInView(displayFileInformation);
+
+                // Selects the file that was entered in the textfield in the ListView
+                selectFile(file.getName());
             }
             else {
                 AlertHandler alertHandler = new AlertHandler();
@@ -112,5 +145,40 @@ public class FileExplorerController {
                 alert.showAndWait();
             }
         }
+    }
+
+    /**
+     * Finds files in given directory when the button is clicked.
+     * Does nothing if directory is empty or if the directory is a file.
+     */
+    public void goToSelected(ActionEvent event) {
+        if(selectedFile != null && selectedFile.isDirectory() && selectedFile.exists()) {
+            List<File> directoryFiles = directoryFileFinder.findFilesInDirectory(selectedFile);
+            if(!directoryFiles.isEmpty()) {
+                currentPath = selectedFile.getPath();
+                updatePathBar();
+                viewFiles(directoryFiles);
+            }
+        }
+    }
+
+    /**
+     * Finds files in given directory when the button is clicked.
+     * 
+     * @param fileName
+     */
+    public void selectFile(String fileName) {
+        listViewPopulator.getListOfFilenames().forEach(filename -> {
+            if(filename.equals(fileName)) {
+                fileListView.getSelectionModel().select(listViewPopulator.getListOfFilenames().indexOf(filename));
+            }
+        });
+    }
+
+    /**
+     * Updates the path bar with the current path.
+     */
+    public void updatePathBar() {
+        pathBar.setText(currentPath);
     }
 }

@@ -26,9 +26,9 @@ public class DirectoryFileFinder {
     //Finner alle filer og mapper i en gitt mappe
     public List<File> findFilesInDirectory(File directory) {
         File[] filesInDirectory = directory.listFiles();
+        List<File> listOfFiles = new ArrayList<>();
         
         if(filesInDirectory.length != 0) {
-            List<File> listOfFiles = new ArrayList<>();
             for(File file : filesInDirectory) {
                 if(!file.isHidden()) {
                     listOfFiles.add(file);
@@ -36,7 +36,7 @@ public class DirectoryFileFinder {
             }
             return listOfFiles;
         }
-        throw new IllegalStateException("This directory is empty.");
+        return listOfFiles;
     }
 
     //Finner alle filer av en gitt type i en gitt mappe

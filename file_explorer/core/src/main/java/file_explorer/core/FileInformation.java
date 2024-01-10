@@ -69,8 +69,14 @@ public class FileInformation {
         fileSize = findFileSize(file);
     }
 
-    //Finds the number of files in a directory
+    /**
+     * Finds the number of files in a directory
+     * 
+     * @param file
+     * @return
+     */
     public int findNumberOfFiles(File file) {
+        // Check cache first
         if(fileNumberCache.containsKey(file.getPath())) {
             return fileNumberCache.get(file.getPath());
         }
@@ -103,7 +109,13 @@ public class FileInformation {
         return numberOfFiles;
     }
 
-    //Finds the file size
+    /**
+     * Finds the size of a file by adding up the size of all files in a directory.
+     * (Slow)
+     * 
+     * @param file
+     * @return String, the size of the file
+     */
     public String findFileSize(File file) {
 
         long bytes = file.length();
@@ -138,7 +150,12 @@ public class FileInformation {
         return "is empty";
     }
 
-    //Finds the size of a directory
+    /**
+     * Finds the size of a directory by adding up the size of all files in a directory.
+     * 
+     * @param directory
+     * @return Long, the size of the directory in bytes
+     */
     public Long getDirectorySize(File directory) {
         Long size = 0L;
         File[] files = directory.listFiles();
