@@ -67,7 +67,7 @@ public class FileExplorerController {
         displayFileInformation.displayFileLocation();
         displayFileInformation.displayFileType();
         //TODO to be implemented later
-        //displayFileInformation.displayNumberOfFiles();
+        displayFileInformation.displayNumberOfFiles();
         //displayFileInformation.displayFileSize();
     }
 
@@ -159,6 +159,16 @@ public class FileExplorerController {
                 updatePathBar();
                 viewFiles(directoryFiles);
             }
+        }
+    }
+
+    public void goToParent(ActionEvent event) {
+        File parentFile = new File(currentPath).getParentFile();
+        if(parentFile != null) {
+            List<File> directoryFiles = directoryFileFinder.findFilesInDirectory(parentFile);
+            currentPath = parentFile.getPath();
+            updatePathBar();
+            viewFiles(directoryFiles);
         }
     }
 

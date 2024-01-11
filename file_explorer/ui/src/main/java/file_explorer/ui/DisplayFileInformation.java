@@ -61,6 +61,10 @@ public class DisplayFileInformation implements FileSizeListener{
         fileInformationList.getItems().add(fileNumberLabel);
     }
 
+    public void displayNumberOfFilesLoading(int numberOfFiles) {
+        fileNumberLabel.setText("Number of files: " + Integer.toString(numberOfFiles));
+    }
+
     public void displayFileSize() {
         fileInformation.setFileSize();
         fileSizeLabel.setText(fileInformation.getFileSize());

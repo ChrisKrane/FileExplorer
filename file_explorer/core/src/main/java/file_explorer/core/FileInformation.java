@@ -80,31 +80,21 @@ public class FileInformation {
         if(fileNumberCache.containsKey(file.getPath())) {
             return fileNumberCache.get(file.getPath());
         }
-        for(FileSizeListener listener : listeners) {
-            listener.startLoading();
-        }
 
-        int numberOfFiles = 0;
-        if(file.listFiles() != null) {
+        numberOfFiles = 0;
+
+        if (file.list() != null) {
+            String[] fileArray = file.list();
+            System.out.println(fileArray.length);
+            
             for(File f : file.listFiles()) {
-                if(f.isFile()) {
+                if(f.isDirectory() && f.listFiles() != null) {
+                    numberOfFiles += findFilesInDirectory(f);
+                }
+                else if(f.isFile()){
                     numberOfFiles++;
                 }
-                else if(f.isDirectory()){
-                    numberOfFiles += findNumberOfFiles(f);
-                }
             }
-            if(numberOfFiles % 100 == 0) {
-                for(FileSizeListener listener : listeners) {
-                    listener.updateNumberOfFiles(numberOfFiles);
-                }
-            }
-        }   
-        else {
-            numberOfFiles++;
-        }
-        for(FileSizeListener listener : listeners) {
-            listener.stopLoading();
         }
         return numberOfFiles;
     }
@@ -179,6 +169,20 @@ public class FileInformation {
             return 0L;
         }
         return size;
+    }
+
+    public int findFilesInDirectory(File directory) {
+        int tempNumberOfFiles = 0;
+        System.out.println(directory.getName());
+        for(File f : directory.listFiles()) {
+            if(f.isDirectory() && f.listFiles() != null) {
+                tempNumberOfFiles += findFilesInDirectory(f);
+            }
+            else if(f.isFile()){
+                tempNumberOfFiles++;
+            }
+        }
+        return tempNumberOfFiles;
     }
 
     //Saves the file size to a hashmap
